@@ -9,7 +9,7 @@ import axios from "axios";
 let url = [
   "https://mycdn.imdo.co",
   "http://132.232.21.30:3000",
-  "http://127.0.0.1:3000"
+  "http://127.0.0.1:8000"
 ];
 //如果test=0进入开发者模式
 let test = 0;

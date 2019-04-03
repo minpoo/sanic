@@ -1,50 +1,59 @@
 <template>
-  <div style="width:50%;margin:auto;margin-top:5%;">
-    <div
-      style="background:#32bbac;height:80px;border-top-left-radius:20px;border-top-right-radius:20px;"
-    >
-      <div class="row" style="color:#fff;font-size:20px;padding-top:25px;line-height:30px;">
-        <div class="col" style="font-family:幼圆;font-size:27px;">{{page[0]}}</div>
-        <div class="col">{{usually[0]}}</div>
-      </div>
+  <div class="box">
+    <div class="form-group">
+      <input type="text" v-model="user" class="form-control user" placeholder="请输入用户名">
     </div>
-    <div style="height:300px;background:#eff1f2;">
-      <div class="row" style="font-size:20px;padding-top:15px;line-height:30px;">
-        <div class="col">{{usually[0]}}</div>
-        <div class="col" style="font-size:15px;color:#666;">还没有账号？立即
-          <router-link to="/register" style="color:#ee780d;">注册</router-link>
-        </div>
-      </div>
-      <div style="width:70%;margin:auto;margin-top:20px;">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="账号">
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" placeholder="密码">
-        </div>
-        <button type="submit" class="btn btn-primary">{{a.button}}</button>
-      </div>
+    <div class="form-group">
+      <input type="password" v-model="pwd" class="form-control pwd" placeholder="输入密码">
     </div>
+    <button type="button" @click="login" class="btn btn-primary">登录</button>
   </div>
 </template>
 
 
 <script>
+import axios from "axios";
 export default {
   data: function() {
-    return {
-      page: ["欢迎登录"],
-      usually: ["", "会员注册"],
-      a: { button: "确定提交" }
-    };
+    return { page: [""], user: "", pwd: "" };
   },
   mounted: function() {},
-  methods: {},
+  methods: {
+    login: function(event) {
+      let self = this;
+      axios
+        .get("http://127.0.0.1:8000/cloud/login", {
+          params: {
+            user: self.user,
+            pwd:self.pwd
+          }
+        })
+        .then(function(res) {
+          if (res.status == 200) {
+            console.log(res);
+          } else {
+            alert(res);
+          }
+        })
+        .catch(() => {
+          alert("eror");
+          console.log("捕获了一个err，但没有说明原因", "");
+        });
+    }
+  },
   components: {}
 };
 </script>
 
 <style scoped>
+.box {
+  width: 30%;
+  margin: auto;
+  margin-top: 100px;
+  border: 1px solid #ececec;
+  padding: 50px;
+  box-shadow: 10px 10px 10px skyblue;
+}
 </style>
 
 
